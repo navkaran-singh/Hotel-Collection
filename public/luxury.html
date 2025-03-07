@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luxury Hotels - Hotel Collection</title>
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #333;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        margin-top: 80px;
+        margin-bottom: 100px;
+        min-height: calc(100vh - 200px);
+      }
+
+      header {
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        background-color: #fff;
+      }
+
+      nav h1 {
+        color: #2c3e50;
+        margin: 0;
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      nav ul {
+        list-style-type: none;
+        display: flex;
+        margin: 0;
+        padding: 0;
+      }
+
+      nav ul li {
+        margin-right: 30px;
+      }
+
+      nav ul li a {
+        color: #2c3e50;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      nav ul li a:after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: #007bff;
+        transition: width 0.3s ease;
+      }
+
+      nav ul li a:hover:after {
+        width: 100%;
+      }
+
+      .btn {
+        padding: 10px 25px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+      }
+
+      .btn:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
+      }
+
+      h1 {
+        color: #2c3e50;
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .hotel-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+      }
+
+      .hotel-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .hotel-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .hotel-card img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .hotel-card:hover img {
+        transform: scale(1.05);
+      }
+
+      .hotel-card-content {
+        padding: 25px;
+      }
+
+      .hotel-card-content h3 {
+        color: #2c3e50;
+        margin: 0 0 15px 0;
+        font-size: 1.5em;
+      }
+
+      .hotel-card-content p {
+        color: #666;
+        margin: 0 0 20px 0;
+        line-height: 1.6;
+      }
+
+      /* Modal styles */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        backdrop-filter: blur(5px);
+      }
+
+      .modal-content {
+        background-color: white;
+        margin: 5% auto;
+        padding: 30px;
+        border-radius: 15px;
+        width: 90%;
+        max-width: 500px;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .close {
+        position: absolute;
+        right: 25px;
+        top: 15px;
+        font-size: 28px;
+        cursor: pointer;
+        color: #666;
+        transition: color 0.3s ease;
+      }
+
+      .close:hover {
+        color: #333;
+      }
+
+      .booking-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .booking-form label {
+        color: #2c3e50;
+        font-weight: 500;
+        margin-bottom: 5px;
+        display: block;
+      }
+
+      .booking-form input,
+      .booking-form select {
+        padding: 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+      }
+
+      .booking-form input:focus,
+      .booking-form select:focus {
+        outline: none;
+        border-color: #007bff;
+      }
+
+      .booking-form button {
+        padding: 12px;
+        background: linear-gradient(45deg, #007bff, #00ff88);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        margin-top: 10px;
+      }
+
+      .booking-form button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+      }
+
+      .page-wrapper {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      footer {
+        background: linear-gradient(45deg, #2c3e50, #3498db);
+        color: white;
+        text-align: center;
+        padding: 20px 0;
+        width: 100%;
+        margin-top: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <header>
+        <nav>
+          <h1>Hotel Collection</h1>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/portfolio">Portfolio</a></li>
+            <li><a href="/login" class="btn">Login</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <div class="container">
+        <h1>Luxury Hotels</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 40px">
+          Experience the epitome of comfort and elegance with our collection of
+          luxury hotels.
+        </p>
+
+        <div class="hotel-grid">
+          <div class="hotel-card">
+            <img
+              src="https://plus.unsplash.com/premium_photo-1697730269491-7a3425f2163c?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGdyYW5kJTIwcGFsYWNlJTIwYmFuZ2tva3xlbnwwfHwwfHx8MA%3D%3D"
+              alt="Luxury Hotel 1"
+            />
+            <div class="hotel-card-content">
+              <h3>Grand Palace Hotel</h3>
+              <p>
+                A majestic 5-star hotel offering unparalleled luxury and
+                service.
+              </p>
+              <a href="#" class="btn">Book Now</a>
+            </div>
+          </div>
+          <div class="hotel-card">
+            <img
+              src="https://images.unsplash.com/photo-1508044594351-60a97e8ce53a?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGhvdGVsJTIwYmVhY2h8ZW58MHx8MHx8fDA%3D"
+              alt="Luxury Hotel 2"
+            />
+            <div class="hotel-card-content">
+              <h3>Seaside Retreat</h3>
+              <p>
+                An exclusive beachfront property with private villas and butler
+                service.
+              </p>
+              <a href="#" class="btn">Book Now</a>
+            </div>
+          </div>
+          <div class="hotel-card">
+            <img
+              src="https://images.unsplash.com/photo-1706794543262-a013701e070c?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW91bnRhaW4lMjByZXNvcnR8ZW58MHx8MHx8fDA%3D"
+              alt="Luxury Hotel 3"
+            />
+            <div class="hotel-card-content">
+              <h3>Mountain View Resort</h3>
+              <p>
+                A secluded mountain resort offering panoramic views and
+                world-class spa facilities.
+              </p>
+              <a href="#" class="btn">Book Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Modal -->
+      <div id="bookingModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Book Your Stay</h2>
+          <form id="bookingForm" class="booking-form">
+            <input type="hidden" id="hotelName" name="hotelName" />
+            <div>
+              <label for="checkIn">Check-in Date:</label>
+              <input type="date" id="checkIn" name="checkIn" required />
+            </div>
+            <div>
+              <label for="checkOut">Check-out Date:</label>
+              <input type="date" id="checkOut" name="checkOut" required />
+            </div>
+            <div>
+              <label for="guests">Number of Guests:</label>
+              <select id="guests" name="guests" required>
+                <option value="1">1 Guest</option>
+                <option value="2">2 Guests</option>
+                <option value="3">3 Guests</option>
+                <option value="4">4 Guests</option>
+              </select>
+            </div>
+            <div>
+              <label for="roomType">Room Type:</label>
+              <select id="roomType" name="roomType" required>
+                <option value="standard">Standard Room</option>
+                <option value="deluxe">Deluxe Room</option>
+                <option value="suite">Suite</option>
+                <option value="presidential">Presidential Suite</option>
+              </select>
+            </div>
+            <button type="submit">Confirm Booking</button>
+          </form>
+        </div>
+      </div>
+
+      <footer>
+        <p>&copy; 2024 Hotel Collection. All rights reserved.</p>
+      </footer>
+    </div>
+
+    <script>
+      // Booking functionality
+      const modal = document.getElementById("bookingModal");
+      const bookingForm = document.getElementById("bookingForm");
+      const hotelNameInput = document.getElementById("hotelName");
+      const closeBtn = document.getElementsByClassName("close")[0];
+
+      // Get all Book Now buttons
+      const bookNowButtons = document.querySelectorAll(".hotel-card .btn");
+
+      // Add click event to each Book Now button
+      bookNowButtons.forEach((button) => {
+        button.addEventListener("click", (e) => {
+          e.preventDefault();
+          const hotelCard = button.closest(".hotel-card");
+          const hotelName = hotelCard.querySelector("h3").textContent;
+          hotelNameInput.value = hotelName;
+          modal.style.display = "block";
+        });
+      });
+
+      // Close modal when clicking the X
+      closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+
+      // Close modal when clicking outside
+      window.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+
+      // Handle form submission
+      bookingForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const formData = {
+          hotel: hotelNameInput.value,
+          checkIn: document.getElementById("checkIn").value,
+          checkOut: document.getElementById("checkOut").value,
+          guests: document.getElementById("guests").value,
+          roomType: document.getElementById("roomType").value,
+        };
+
+        // Basic validation
+        const checkInDate = new Date(formData.checkIn);
+        const checkOutDate = new Date(formData.checkOut);
+
+        if (checkOutDate <= checkInDate) {
+          alert("Check-out date must be after check-in date!");
+          return;
+        }
+
+        // Store booking in localStorage (for demonstration)
+        const bookings = JSON.parse(localStorage.getItem("bookings") || "[]");
+        bookings.push(formData);
+        localStorage.setItem("bookings", JSON.stringify(bookings));
+
+        // Show success message
+        alert("Booking confirmed! Thank you for choosing " + formData.hotel);
+
+        // Close modal and reset form
+        modal.style.display = "none";
+        bookingForm.reset();
+      });
+
+      // Set minimum date for check-in to today
+      const today = new Date().toISOString().split("T")[0];
+      document.getElementById("checkIn").min = today;
+      document.getElementById("checkOut").min = today;
+    </script>
+  </body>
+</html>

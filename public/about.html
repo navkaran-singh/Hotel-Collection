@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - Hotel Collection</title>
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #333;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        margin-top: 80px;
+        margin-bottom: 100px;
+        min-height: calc(100vh - 200px);
+      }
+
+      header {
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        background-color: #fff;
+      }
+
+      nav h1 {
+        color: #2c3e50;
+        margin: 0;
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      nav ul {
+        list-style-type: none;
+        display: flex;
+        margin: 0;
+        padding: 0;
+      }
+
+      nav ul li {
+        margin-right: 30px;
+      }
+
+      nav ul li a {
+        color: #2c3e50;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      nav ul li a:after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: #007bff;
+        transition: width 0.3s ease;
+      }
+
+      nav ul li a:hover:after {
+        width: 100%;
+      }
+
+      .btn {
+        padding: 10px 25px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+      }
+
+      .btn:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
+      }
+
+      .about-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+        margin-bottom: 60px;
+      }
+
+      .about-content {
+        padding: 20px;
+      }
+
+      .about-content h1 {
+        color: #2c3e50;
+        font-size: 2.5em;
+        margin-bottom: 20px;
+      }
+
+      .about-content p {
+        color: #666;
+        line-height: 1.8;
+        margin-bottom: 20px;
+      }
+
+      .about-image {
+        position: relative;
+        height: 400px;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .about-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        margin-top: 60px;
+      }
+
+      .feature-card {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-10px);
+      }
+
+      .feature-card i {
+        font-size: 2.5em;
+        color: #007bff;
+        margin-bottom: 20px;
+      }
+
+      .feature-card h3 {
+        color: #2c3e50;
+        margin-bottom: 15px;
+      }
+
+      .feature-card p {
+        color: #666;
+        line-height: 1.6;
+      }
+
+      .page-wrapper {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      footer {
+        background: linear-gradient(45deg, #2c3e50, #3498db);
+        color: white;
+        text-align: center;
+        padding: 20px 0;
+        width: 100%;
+        margin-top: auto;
+      }
+
+      @media (max-width: 768px) {
+        .about-section {
+          grid-template-columns: 1fr;
+        }
+
+        .features {
+          grid-template-columns: 1fr;
+        }
+
+        .about-image {
+          height: 300px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <header>
+        <nav>
+          <h1>Hotel Collection</h1>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/portfolio">Portfolio</a></li>
+            <li><a href="/login" class="btn">Login</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <div class="container">
+        <section class="about-section">
+          <div class="about-content">
+            <h1>About Hotel Collection</h1>
+            <p>
+              Welcome to Hotel Collection, where luxury meets comfort. Since our
+              establishment, we have been dedicated to providing exceptional
+              hospitality services that exceed our guests' expectations.
+            </p>
+            <p>
+              Our commitment to excellence is reflected in every aspect of our
+              service, from our meticulously maintained accommodations to our
+              attentive staff who ensure your stay is nothing short of perfect.
+            </p>
+            <a href="/contact" class="btn">Get in Touch</a>
+          </div>
+          <div class="about-image">
+            <img
+              src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+              alt="Luxury Hotel Interior"
+            />
+          </div>
+        </section>
+
+        <div class="features">
+          <div class="feature-card">
+            <i>🌟</i>
+            <h3>Luxury Accommodations</h3>
+            <p>
+              Experience the epitome of comfort in our carefully designed rooms
+              and suites, featuring premium amenities and stunning views.
+            </p>
+          </div>
+          <div class="feature-card">
+            <i>🍽️</i>
+            <h3>Fine Dining</h3>
+            <p>
+              Indulge in exquisite culinary experiences at our restaurants,
+              featuring world-class chefs and carefully curated menus.
+            </p>
+          </div>
+          <div class="feature-card">
+            <i>👥</i>
+            <h3>Dedicated Service</h3>
+            <p>
+              Our professional staff is committed to providing personalized
+              service to ensure your stay exceeds expectations.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <p>&copy; 2024 Hotel Collection. All rights reserved.</p>
+      </footer>
+    </div>
+  </body>
+</html>
