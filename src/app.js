@@ -36,9 +36,10 @@ app.use(
     cookie: { secure: false },
   })
 );
-
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "../views"));
 // Serve static files
-app.use(express.static(join(__dirname, "../public")));
+app.use(express.static(join(__dirname, "../views")));
 
 // Authentication middleware
 const isAuthenticated = (req, res, next) => {
@@ -53,13 +54,13 @@ const isAuthenticated = (req, res, next) => {
 app.use("/", pageRoutes);
 app.use("/auth", authRoutes);
 
-// Protected route example
+
 app.get("/dashboard", isAuthenticated, (req, res) => {
-  res.sendFile(join(__dirname, "../public/dashboard.html"));
+  res.render("dashboard", { user: req.session.user });
 });
 
 app.get("/index", (req, res) => {
-  res.sendFile(join(__dirname, "../public/index.html"));
+  res.render("index");
 });
 
 // Handle login

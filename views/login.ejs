@@ -1,0 +1,243 @@
+<%- include('partials/header') %>
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #333;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        margin-top: 80px;
+        margin-bottom: 100px;
+        min-height: calc(100vh - 200px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      header {
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        background-color: #fff;
+      }
+
+      nav h1 {
+        color: #2c3e50;
+        margin: 0;
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      nav ul {
+        list-style-type: none;
+        display: flex;
+        margin: 0;
+        padding: 0;
+      }
+
+      nav ul li {
+        margin-right: 30px;
+      }
+
+      nav ul li a {
+        color: #2c3e50;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      nav ul li a:after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: #007bff;
+        transition: width 0.3s ease;
+      }
+
+      nav ul li a:hover:after {
+        width: 100%;
+      }
+
+      .btn {
+        padding: 10px 25px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+      }
+
+      .btn:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
+      }
+
+      .login-form {
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        margin-top: 20px;
+      }
+
+      .login-form input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+      }
+
+      .login-form input:focus {
+        outline: none;
+        border-color: #007bff;
+      }
+
+      .login-form label {
+        color: #2c3e50;
+        font-weight: 500;
+        margin-bottom: 8px;
+        display: block;
+      }
+
+      .login-form button {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(45deg, #007bff, #00ff88);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .login-form button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+      }
+
+      .signup-link {
+        text-align: center;
+        margin-top: 20px;
+        color: #666;
+      }
+
+      .signup-link span {
+        color: #007bff;
+        cursor: pointer;
+        font-weight: 500;
+      }
+
+      .page-wrapper {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      footer {
+        background: linear-gradient(45deg, #2c3e50, #3498db);
+        color: white;
+        text-align: center;
+        padding: 20px 0;
+        width: 100%;
+        margin-top: auto;
+      }
+
+      .error-message {
+        color: #dc3545;
+        background-color: #ffe6e6;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: none;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <%- include('partials/nav') %>
+
+      <div class="container">
+        <h1>Login</h1>
+        <form
+          class="login-form"
+          id="loginForm"
+          action="/auth/login"
+          method="POST"
+        >
+          <div id="errorMessage" class="error-message"></div>
+          <div>
+            <label for="username">Username</label>
+            <input required name="username" id="username" type="text" />
+          </div>
+          <div>
+            <label for="password">Password</label>
+            <input required name="password" id="password" type="password" />
+          </div>
+          <button type="submit" class="btn">Log In</button>
+        </form>
+        <p class="signup-link">
+          Don't have an account?
+          <span id="signUpButton">Sign Up</span>
+        </p>
+      </div>
+
+      <%- include('partials/footer') %>
+    </div>
+
+    <script>
+      document
+        .getElementById("signUpButton")
+        .addEventListener("click", function () {
+          window.location.href = "/signup";
+        });
+
+      // Handle error messages from URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const error = urlParams.get("error");
+
+      if (error) {
+        const errorDiv = document.getElementById("errorMessage");
+        errorDiv.style.display = "block";
+
+        if (error === "invalid") {
+          errorDiv.textContent = "Invalid username or password";
+        } else if (error === "server") {
+          errorDiv.textContent = "Server error occurred. Please try again.";
+        }
+      }
+    </script>
+  </body>
+</html>
