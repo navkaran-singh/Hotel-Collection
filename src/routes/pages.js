@@ -18,40 +18,40 @@ const isAuthenticated = (req, res, next) => {
 
 // Public routes
 router.get("/", (req, res) => {
-  res.sendFile(join(__dirname, "../../public/index.html"));
+  res.render("index")
 });
 
 router.get("/login", (req, res) => {
-  res.sendFile(join(__dirname, "../../public/login.html"));
+  res.render("login");
 });
 
 router.get("/signup", (req, res) => {
-  res.sendFile(join(__dirname, "../../public/signup.html"));
+  res.render("signup")
 });
 
 router.get("/about", (req, res) => {
-  res.sendFile(join(__dirname, "../../public/about.html"));
+  res.render("about");
 });
 
 router.get("/contact", (req, res) => {
-  res.sendFile(join(__dirname, "../../public/contact.html"));
+  res.render("contact")
 });
 
 router.get("/portfolio", (req, res) => {
-  res.sendFile(join(__dirname, "../../public/portfolio.html"));
+  res.render("portfolio")
 });
 
 router.get("/luxury", (req, res) => {
-  res.sendFile(join(__dirname, "../../public/luxury.html"));
+  res.render("luxury")
 });
 
 // Protected routes
 router.get("/dashboard", isAuthenticated, (req, res) => {
-  res.sendFile(join(__dirname, "../../public/dashboard.html"));
+  res.redirect("dashboard")
 });
 
 router.get("/logout", isAuthenticated, (req, res) => {
-  res.sendFile(join(__dirname, "../../public/logout.html"));
+  res.redirect("logout");
 });
 
 export default router;
