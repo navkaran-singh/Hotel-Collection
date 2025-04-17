@@ -1,0 +1,188 @@
+<%- include('partials/header') %>
+
+<style>
+  body {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #333;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 80px;
+    margin-bottom: 100px;
+    min-height: calc(100vh - 200px);
+  }
+  .bookings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+  .bookings-header h1 {
+    color: #2c3e50;
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .btn {
+    padding: 10px 25px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+  }
+  .btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
+  }
+  .card-new-booking {
+    background: linear-gradient(90deg, #007bff 60%, #6dd5fa 100%);
+    color: #fff;
+    border-radius: 18px;
+    padding: 28px 36px;
+    margin-bottom: 35px;
+    box-shadow: 0 4px 20px rgba(0,123,255,0.10);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .card-new-booking h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .card-new-booking .btn {
+    background: #fff;
+    color: #007bff;
+    font-weight: 600;
+    border-radius: 18px;
+    box-shadow: none;
+    padding: 10px 30px;
+  }
+  .card-new-booking .btn:hover {
+    background: #f8f9fa;
+    color: #0056b3;
+  }
+  .bookings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 18px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+    overflow: hidden;
+  }
+  .bookings-table th, .bookings-table td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+  }
+  .bookings-table th {
+    background-color: #f8f9fa;
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 1.08rem;
+  }
+  .bookings-table tr:last-child td {
+    border-bottom: none;
+  }
+  .bookings-table tr:hover {
+    background-color: #f6fbff;
+  }
+  .status-badge {
+    padding: 6px 16px;
+    border-radius: 15px;
+    font-size: 0.95em;
+    font-weight: 500;
+    display: inline-block;
+    min-width: 90px;
+    text-align: center;
+  }
+  .status-confirmed {
+    background-color: #e8f5e9;
+    color: #28a745;
+  }
+  .status-pending {
+    background-color: #fff3cd;
+    color: #ffc107;
+  }
+  .status-cancelled {
+    background-color: #ffe6e6;
+    color: #dc3545;
+  }
+  @media (max-width: 768px) {
+    .container {
+      padding: 10px;
+    }
+    .bookings-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .card-new-booking {
+      flex-direction: column;
+      gap: 14px;
+      padding: 20px 10px;
+    }
+    .bookings-table {
+      display: block;
+      overflow-x: auto;
+    }
+  }
+</style>
+<div class="container">
+  <div class="bookings-header">
+    <h1>Your Bookings</h1>
+    <a href="/dashboard" class="btn">Back to Dashboard</a>
+  </div>
+  <div class="card-new-booking">
+    <h2><span style="vertical-align: middle; margin-right: 10px;">📝</span> Start a new hotel booking</h2>
+    <a href="/bookings/new" class="btn">New Booking</a>
+  </div>
+  <table class="bookings-table">
+    <thead>
+      <tr>
+        <th>Booking ID</th>
+        <th>Hotel</th>
+        <th>Check-in</th>
+        <th>Check-out</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>#10001</td>
+        <td>Seaside Resort & Spa</td>
+        <td>2025-05-01</td>
+        <td>2025-05-05</td>
+        <td><span class="status-badge status-confirmed">Confirmed</span></td>
+      </tr>
+      <tr>
+        <td>#10002</td>
+        <td>Metropolitan Grand Hotel</td>
+        <td>2025-06-10</td>
+        <td>2025-06-15</td>
+        <td><span class="status-badge status-pending">Pending</span></td>
+      </tr>
+      <tr>
+        <td>#10003</td>
+        <td>Alpine Mountain Lodge</td>
+        <td>2025-07-20</td>
+        <td>2025-07-25</td>
+        <td><span class="status-badge status-cancelled">Cancelled</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

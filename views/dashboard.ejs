@@ -232,7 +232,7 @@
 
       <div class="container">
         <div class="dashboard-header">
-          <h1>Welcome back, <span id="username">User</span>!</h1>
+          <h1>Welcome back!</h1>
           <a href="/bookings/new" class="btn">New Booking</a>
         </div>
 
@@ -305,11 +305,5 @@
 
       <%- include('partials/footer') %>
     </div>
-
-    <script>
-      // Get username from localStorage or session
-      const username = localStorage.getItem("username") || "User";
-      document.getElementById("username").textContent = username;
-    </script>
   </body>
 </html>

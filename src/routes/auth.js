@@ -20,24 +20,25 @@ const writeUsers = async (users) => {
   await fs.writeFile(usersFile, JSON.stringify(users, null, 2));
 };
 
-// Login route
+// Login route - without sessions
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
     const users = await readUsers();
 
     if (users[username] && users[username] === password) {
-      req.session.user = username;
+      // Simply redirect to dashboard without session
       res.redirect("/dashboard");
     } else {
       res.redirect("/login?error=invalid");
     }
   } catch (error) {
+    console.error("Login error:", error);
     res.redirect("/login?error=server");
   }
 });
 
-// Signup route
+// Signup route - without sessions
 router.post("/signup", async (req, res) => {
   try {
     const {
@@ -59,25 +60,18 @@ router.post("/signup", async (req, res) => {
     users[username] = password;
     await writeUsers(users);
 
-    req.session.user = username;
+    // Redirect to dashboard without session
     res.redirect("/dashboard");
   } catch (error) {
+    console.error("Signup error:", error);
     res.status(500).send("Server error");
   }
 });
 
-// Logout route
+// Logout route - simplified without sessions
 router.post("/logout", async (req, res) => {
-  try {
-    req.session.destroy((err) => {
-      if (err) {
-        return res.status(500).send("Error logging out");
-      }
-      res.redirect("/");
-    });
-  } catch (error) {
-    res.status(500).send("Server error");
-  }
+  // Just redirect to home page
+  res.redirect("/");
 });
 
 export default router;

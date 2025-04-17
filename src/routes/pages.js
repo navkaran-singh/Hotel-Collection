@@ -7,15 +7,6 @@ const __dirname = dirname(__filename);
 
 const router = express.Router();
 
-// Middleware to check if user is authenticated
-const isAuthenticated = (req, res, next) => {
-  if (req.session.user) {
-    next();
-  } else {
-    res.redirect("/login");
-  }
-};
-
 // Public routes
 router.get("/", (req, res) => {
   res.render("index")
@@ -27,6 +18,11 @@ router.get("/login", (req, res) => {
 
 router.get("/signup", (req, res) => {
   res.render("signup")
+});
+
+// Bookings page
+router.get("/bookings", (req, res) => {
+  res.render("bookings");
 });
 
 router.get("/about", (req, res) => {
@@ -46,12 +42,8 @@ router.get("/luxury", (req, res) => {
 });
 
 // Protected routes
-router.get("/dashboard", isAuthenticated, (req, res) => {
-  res.redirect("dashboard")
-});
+// Removed /dashboard route to prevent infinite redirect loop
 
-router.get("/logout", isAuthenticated, (req, res) => {
-  res.redirect("logout");
-});
+// Removed /logout route to prevent infinite redirect loop
 
 export default router;

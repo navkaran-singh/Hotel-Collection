@@ -1,11 +1,9 @@
 import express from "express";
-import session from "express-session";
 import cors from "cors";
 import morgan from "morgan";
 import fs from "fs";
 import path, { join } from "path";
 import { fileURLToPath } from "url";
-import querystring from "querystring";
 import authRoutes from "./routes/auth.js";
 import pageRoutes from "./routes/pages.js";
 
@@ -27,53 +25,48 @@ app.use((req, res, next) => {
   next();
 });
 
-// Session middleware
-app.use(
-  session({
-    secret: "your-secret-key",
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false },
-  })
-);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../views"));
 // Serve static files
 app.use(express.static(join(__dirname, "../views")));
 
-// Authentication middleware
-const isAuthenticated = (req, res, next) => {
-  if (req.session.user) {
-    next();
-  } else {
-    res.redirect("/login");
-  }
-};
-
 // Routes
 app.use("/", pageRoutes);
 app.use("/auth", authRoutes);
 
-
-app.get("/dashboard", isAuthenticated, (req, res) => {
-  res.render("dashboard", { user: req.session.user });
+// Dashboard route - no session check
+app.get("/dashboard", (req, res) => {
+  // Simply render the dashboard without user data
+  res.render("dashboard", { user: "User" });
 });
 
 app.get("/index", (req, res) => {
   res.render("index");
 });
 
-// Handle login
+// Handle login - without sessions
 app.post("/login", (req, res) => {
   let { username, password } = req.body;
-  fs.readFile("users.json", (err, data) => {
-    if (err) return res.status(500).send("Error reading user data");
-    let users = JSON.parse(data);
-    if (users[username] && users[username] === password) {
-      req.session.user = username;
-      return res.redirect("/dashboard");
+  const usersFilePath = path.join(__dirname, "users.json");
+  
+  fs.readFile(usersFilePath, "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading user data:", err);
+      return res.status(500).send("Error reading user data");
     }
-    res.status(401).send("Invalid credentials");
+    
+    try {
+      let users = JSON.parse(data);
+      if (users[username] && users[username] === password) {
+        // Simply redirect to dashboard on successful login
+        return res.redirect("/dashboard");
+      } else {
+        res.status(401).send("Invalid credentials");
+      }
+    } catch (error) {
+      console.error("Error processing user data:", error);
+      res.status(500).send("Error processing user data");
+    }
   });
 });
 
@@ -83,21 +76,25 @@ app.post("/signup", (req, res) => {
   if (password !== confirmPassword) {
     return res.status(400).send("Passwords don't match");
   }
-  fs.readFile("users.json", "utf8", (err, data) => {
-    let users = data ? JSON.parse(data) : {};
+  
+  const usersFilePath = path.join(__dirname, "users.json");
+  
+  fs.readFile(usersFilePath, "utf8", (err, data) => {
+    let users = {};
+    if (!err && data) {
+      try {
+        users = JSON.parse(data);
+      } catch (error) {
+        return res.status(500).send("Error parsing user data");
+      }
+    }
+    
     users[username] = password;
-    fs.writeFile("users.json", JSON.stringify(users), (err) => {
-      if (err) return res.status(500).send("Error saving user");
+    
+    fs.writeFile(usersFilePath, JSON.stringify(users), (writeErr) => {
+      if (writeErr) return res.status(500).send("Error saving user");
       res.send("Signup successful!");
     });
-  });
-});
-
-// Handle logout
-app.post("/logout", (req, res) => {
-  req.session.destroy((err) => {
-    if (err) return res.status(500).send("Error logging out");
-    res.send("Logged out successfully");
   });
 });
 
@@ -109,7 +106,7 @@ app.use((req, res, next) => {
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.message);
+  console.error(err.stack);
   res.status(500).send("Something went wrong!");
 });
 
