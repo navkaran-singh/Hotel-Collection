@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard - Hotel Collection</title>
+<%- include('partials/header') %>
     <style>
       body {
         font-family: "Poppins", sans-serif;
@@ -233,17 +228,7 @@
   </head>
   <body>
     <div class="page-wrapper">
-      <header>
-        <nav>
-          <h1>Hotel Collection</h1>
-          <ul>
-            <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="/bookings">Bookings</a></li>
-            <li><a href="/profile">Profile</a></li>
-            <li><a href="/logout" class="btn btn-danger">Logout</a></li>
-          </ul>
-        </nav>
-      </header>
+      <%- include('partials/nav') %>
 
       <div class="container">
         <div class="dashboard-header">
@@ -318,9 +303,7 @@
         </div>
       </div>
 
-      <footer>
-        <p>&copy; 2024 Hotel Collection. All rights reserved.</p>
-      </footer>
+      <%- include('partials/footer') %>
     </div>
 
     <script>

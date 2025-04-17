@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio - Hotel Collection</title>
+<%- include('partials/header') %>
     <style>
       body {
         font-family: "Poppins", sans-serif;
@@ -210,18 +205,7 @@
   </head>
   <body>
     <div class="page-wrapper">
-      <header>
-        <nav>
-          <h1>Hotel Collection</h1>
-          <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/contact">Contact</a></li>
-            <li><a href="/portfolio">Portfolio</a></li>
-            <li><a href="/login" class="btn">Login</a></li>
-          </ul>
-        </nav>
-      </header>
+      <%- include('partials/nav') %>
 
       <div class="container">
         <div class="portfolio-header">
@@ -301,9 +285,7 @@
         </div>
       </div>
 
-      <footer>
-        <p>&copy; 2024 Hotel Collection. All rights reserved.</p>
-      </footer>
+      <%- include('partials/footer') %>
     </div>
 
     <script>
