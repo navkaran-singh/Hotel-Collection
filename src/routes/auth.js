@@ -1,76 +1,45 @@
 import express from "express";
-import { promises as fs } from "fs";
-import { join } from "path";
+import User from "../models/User.js";
 
 const router = express.Router();
-const usersFile = join(process.cwd(), "users.json");
 
-// Middleware to read users file
-const readUsers = async () => {
-  try {
-    const data = await fs.readFile(usersFile, "utf8");
-    return JSON.parse(data);
-  } catch (error) {
-    return {};
-  }
-};
-
-// Middleware to write users file
-const writeUsers = async (users) => {
-  await fs.writeFile(usersFile, JSON.stringify(users, null, 2));
-};
-
-// Login route - without sessions
-router.post("/login", async (req, res) => {
-  try {
-    const { username, password } = req.body;
-    const users = await readUsers();
-
-    if (users[username] && users[username] === password) {
-      // Simply redirect to dashboard without session
-      res.redirect("/dashboard");
-    } else {
-      res.redirect("/login?error=invalid");
-    }
-  } catch (error) {
-    console.error("Login error:", error);
-    res.redirect("/login?error=server");
-  }
-});
-
-// Signup route - without sessions
+// Signup route
 router.post("/signup", async (req, res) => {
+  const { username, password, "confirm-password": confirmPassword } = req.body;
+  if (password !== confirmPassword) return res.status(400).send("Passwords don't match");
+
   try {
-    const {
-      username,
-      password,
-      "confirm-password": confirmPassword,
-    } = req.body;
+    const existing = await User.findOne({ username });
+    if (existing) return res.status(400).send("Username already exists");
 
-    if (password !== confirmPassword) {
-      return res.status(400).send("Passwords don't match");
-    }
-
-    const users = await readUsers();
-
-    if (users[username]) {
-      return res.status(400).send("Username already exists");
-    }
-
-    users[username] = password;
-    await writeUsers(users);
-
-    // Redirect to dashboard without session
+    const newUser = new User({ username, password });
+    await newUser.save();
     res.redirect("/dashboard");
-  } catch (error) {
-    console.error("Signup error:", error);
+  } catch (err) {
+    console.error("Signup error:", err);
     res.status(500).send("Server error");
   }
 });
 
-// Logout route - simplified without sessions
-router.post("/logout", async (req, res) => {
-  // Just redirect to home page
+// Login route
+router.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const user = await User.findOne({ username });
+    if (user && user.password === password) {
+      res.redirect("/dashboard");
+    } else {
+      res.status(401).send("Invalid credentials");
+    }
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).send("Server error");
+  }
+});
+
+// Logout route
+router.post("/logout", (req, res) => {
   res.redirect("/");
 });
 
