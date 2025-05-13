@@ -20,10 +20,7 @@ router.get("/signup", (req, res) => {
   res.render("signup")
 });
 
-// Bookings page
-router.get("/bookings", (req, res) => {
-  res.render("bookings");
-});
+
 
 router.get("/about", (req, res) => {
   res.render("about");

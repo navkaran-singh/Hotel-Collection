@@ -233,7 +233,12 @@
       <div class="container">
         <div class="dashboard-header">
           <h1>Welcome back!</h1>
-          <a href="/bookings/new" class="btn">New Booking</a>
+          <!-- <a href="/bookings/new?userId=<%= user._id %>" class="btn">New Booking</a> -->
+          <form action="/bookings/new" method="POST">
+            <input type="hidden" name="userId" value="<%= user._id %>">
+            <button type="submit" class="btn">New Booking</button>
+          </form>
+          
         </div>
 
         <div class="dashboard-stats">
@@ -258,7 +263,10 @@
         <div class="bookings-section">
           <div class="bookings-header">
             <h2>Recent Bookings</h2>
-            <a href="/bookings" class="btn">View All</a>
+            <form action="/bookings" method="POST">
+              <input type="hidden" name="userId" value="<%= user._id %>">
+              <button type="submit" class="btn">View All</button>
+            </form>
           </div>
           <table class="bookings-table">
             <thead>

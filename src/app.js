@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import connectDB from "./db.js";
 import authRoutes from "./routes/auth.js";
 import pageRoutes from "./routes/pages.js";
+import bookingRoutes from "./routes/booking.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,10 +30,11 @@ app.use(express.static(join(__dirname, "../views")));
 // Routes
 app.use("/", pageRoutes);
 app.use("/auth", authRoutes);
+app.use("/bookings", bookingRoutes);
 
 // Dashboard route
 app.get("/dashboard", (req, res) => {
-  res.render("dashboard", { user: "User" });
+  res.render("dashboard", { user: "User"});
 });
 
 // Application-level logging middleware

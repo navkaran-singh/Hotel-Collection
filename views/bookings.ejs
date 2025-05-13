@@ -183,6 +183,15 @@
         <td>2025-07-25</td>
         <td><span class="status-badge status-cancelled">Cancelled</span></td>
       </tr>
+      <% bookings.forEach(booking => { %>
+        <tr>
+          <td><%= booking.bookingId %></td>
+          <td><%= booking.hotel %></td>
+          <td><%= booking.checkIn.toDateString() %></td>
+          <td><%= booking.checkOut.toDateString() %></td>
+          <td><span class="status-badge status-<%= booking.status.toLowerCase() %>"><%= booking.status %></span></td>
+        </tr>
+      <% }) %>
     </tbody>
   </table>
 </div>

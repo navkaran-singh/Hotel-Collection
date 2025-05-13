@@ -14,7 +14,8 @@ router.post("/signup", async (req, res) => {
 
     const newUser = new User({ username, password });
     await newUser.save();
-    res.redirect("/dashboard");
+    const userId = req.query.userId;
+    res.redirect(`/dashboard?userId=${userId}`);
   } catch (err) {
     console.error("Signup error:", err);
     res.status(500).send("Server error");
@@ -28,7 +29,7 @@ router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ username });
     if (user && user.password === password) {
-      res.redirect("/dashboard");
+      res.render("dashboard", { user: user });
     } else {
       res.status(401).send("Invalid credentials");
     }
