@@ -1,27 +1,125 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Booking</title>
-  <style>
-    form {
-      max-width: 400px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    label {
-      font-weight: bold;
-    }
-    input, select, button {
-      padding: 8px;
-      font-size: 1em;
-    }
-  </style>
-</head>
-<body>
+<%- include('partials/header') %>
+<header class="site-header">
+  <h2>Hotel Booking Portal</h2>
+</header>
+
+
+
+<nav class="navbar">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/bookings/create">Create Booking</a></li>
+    <li><a href="/bookings">View Bookings</a></li>
+    <li><a href="/logout">Logout</a></li>
+  </ul>
+</nav>
+<style>
+  .site-header {
+    background: linear-gradient(to right, #007bff, #00ffbf);
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .site-header h2 {
+    margin: 0;
+    font-size: 1.8em;
+    font-weight: 600;
+  }
+
+  .navbar {
+    background-color: #ffffff;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+
+  .navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .navbar li a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: 500;
+    font-size: 1.1em;
+    transition: color 0.3s;
+  }
+
+  .navbar li a:hover {
+    color: #00bfa5;
+  }
+
+  body {
+    background-color: #f7f9fa;
+    font-family: Arial, sans-serif;
+  }
+
+  .booking-container {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .booking-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #222;
+  }
+
+  .booking-container label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .booking-container input,
+  .booking-container select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+  }
+
+  .booking-container button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    font-size: 1em;
+    color: #fff;
+    background: linear-gradient(to right, #007bff, #00ffbf);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .booking-container button:hover {
+    background: linear-gradient(to right, #0056b3, #00bfa5);
+  }
+  .site-footer {
+    background-color: #f1f1f1;
+    padding: 15px 0;
+    text-align: center;
+    color: #555;
+    font-size: 0.95em;
+    margin-top: 40px;
+    border-top: 1px solid #ddd;
+  }
+</style>
+
+<div class="booking-container">
   <h1>Create a New Booking</h1>
   <form action="/bookings/create" method="POST">
     <label for="bookingId">Booking ID</label>
@@ -47,5 +145,10 @@
 
     <button type="submit">Book Now</button>
   </form>
-</body>
-</html>
+</div>
+
+<footer class="site-footer">
+  <p>&copy; <%= new Date().getFullYear() %> Hotel Booking Portal. All rights reserved.</p>
+</footer>
+
+
